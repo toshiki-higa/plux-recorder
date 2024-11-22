@@ -1,0 +1,12 @@
+
+# Related to dev environment
+.venv
+__pycache__
+.cursorrules
+.DS_Store
+
+# Related to data
+data/
+
+# From another repository
+PLUX-API-Python3/

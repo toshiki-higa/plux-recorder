@@ -1,0 +1,16 @@
+[project]
+name = "plux-recording"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.39.0",
+    "altair>=5.4.1",
+    "pandas>=2.2.3",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ipykernel>=6.29.5",
+]
