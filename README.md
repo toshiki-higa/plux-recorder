@@ -34,9 +34,12 @@ This application is a Python application that retrieves data in real-time from t
     ```
 
 ## How to use
-```bash
-uv run streamlit run src/app.py --server.headless=true 
-```
+1. Prepare [Plux device](https://www.pluxbiosignals.com/collections/data-acquisition-systems/products/8-channel-biosignals-kit)
+2. Turn [Plux device](https://www.pluxbiosignals.com/collections/data-acquisition-systems/products/8-channel-biosignals-kit) on
+3. Run the application
+    ```bash
+    uv run streamlit run src/app.py --server.headless=true 
+    ```
 ## TODO
 - [ ] Refactor app.py
 - [ ] Confirm compatibility with platforms other than macOS (M chip)
