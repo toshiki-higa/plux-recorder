@@ -67,16 +67,16 @@ class SignalsDevice(plux.SignalsDev):
         Returns:
             bool: Indicates whether the communication loop should stop.
         """
-        # Record Start time
+        # Record Data
+        row = [nSeq/self.sampling_rate] + list(data)
+        columns = ["nSeq"] + [f"ch{i+1}" for i in range(len(data))]
+        new_data = pd.DataFrame([row])  # Convert *data to a pandas DataFrame
+        new_data.columns = columns
         if nSeq == 0:
             self.starttime = datetime.datetime.now()
             self.filename = int(self.starttime.timestamp() * 1000)
-            self.data = pd.DataFrame([[nSeq/self.sampling_rate] + list(data)])   # Convert data to a pandas DataFrame
-            self.data.columns = ["nSeq"] + [f"ch{i+1}" for i in range(len(data))]
-        # Record Data
+            self.data = new_data   # Convert data to a pandas DataFrame
         else:
-            new_data = pd.DataFrame([[nSeq/self.sampling_rate] + list(data)])  # Convert *data to a pandas DataFrame
-            new_data.columns = ["nSeq"] + [f"ch{i+1}" for i in range(len(data))]
             self.data = pd.concat([self.data, new_data])  # Append new data
         # Remove old data
         if self.data.shape[0] > self.sampling_rate * DURATION_KEEP_DATA:
