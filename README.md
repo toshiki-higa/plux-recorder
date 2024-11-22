@@ -40,3 +40,6 @@ uv run streamlit run src/app.py --server.headless=true
 ## TODO
 - [ ] Refactor app.py
 - [ ] Confirm compatibility with platforms other than macOS (M chip)
+
+## License
+This repository is licensed under the MIT License.
