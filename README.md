@@ -5,7 +5,7 @@ This application is a Python application that retrieves data in real-time from t
 
 ## Features
 - Real-time data acquisition and visualization
-- Dynamic channel name setting
+- Automatically detect type of sensors like [Opensignals](https://www.pluxbiosignals.com/pages/opensignals)
 - Interactive graph display using Altair
 
 ## Requirements
@@ -41,9 +41,11 @@ This application is a Python application that retrieves data in real-time from t
     uv run streamlit run src/app.py --server.headless=true 
     ```
 ## TODO
-- [ ] Refactor app.py
 - [x] Add a function to automatically detect type of sensors
 - [ ] Confirm compatibility with platforms other than macOS (M chip)
+- [ ] Refactor app.py
+- [ ] Introduce Ruff, mypy, and pytest (also add pre-commit)
+- [ ] Make document using MKDocs
 
 ## License
 This repository is licensed under the MIT License.
