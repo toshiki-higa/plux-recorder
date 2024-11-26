@@ -42,6 +42,7 @@ This application is a Python application that retrieves data in real-time from t
     ```
 ## TODO
 - [ ] Refactor app.py
+- [ ] Add a function to automatically detect type of sensors
 - [ ] Confirm compatibility with platforms other than macOS (M chip)
 
 ## License

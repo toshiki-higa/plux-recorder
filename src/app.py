@@ -13,7 +13,7 @@ import altair as alt
 import sys
 sys.path.append("PLUX-API-Python3/M1_312") # Adjust as necessary
 import plux
-from const import MAC_ADDRESS, SAMPLING_RATE, INTERVAL, DURATION_KEEP_DATA
+from const import MAC_ADDRESS, SAMPLING_RATE, INTERVAL, DURATION_KEEP_DATA, SENSOR_TYPES
 from logger import logger
 
 # handlerBioPlux.py ----------------------
@@ -103,6 +103,13 @@ class SignalsDevice(plux.SignalsDev):
         This method sets the event to signal the stopping of the data acquisition loop.
         """
         self.stop_communication_loop.set()
+    
+    def get_sensor_sources(self):
+        """Returns the sensors connected to the device."""
+        sensor_ports = [port for port, _ in self.getSensors().items()]
+        sensor_classes = [SENSOR_TYPES[sensor.clas] for _, sensor in self.getSensors().items()]
+        sources = [create_source(port, 1, 16, 0x01) for port in sensor_ports]
+        return sources, sensor_ports, sensor_classes
 
 def create_source(port, freq_divisor, n_bits, ch_mask):
     source = plux.Source()
@@ -119,12 +126,13 @@ class Worker(Thread):
         self.device = None
         self.mac_address = mac_address  # Use the provided MAC address
         self.sampling_rate = sampling_rate  # Use the provided sampling rate
+        self.sensor_ports   = []
+        self.sensor_classes = []
         self.should_stop = Event()
     
     def run(self):
         self.device = SignalsDevice(self.mac_address)
-        existSensorsPorts = [port for port, _ in self.device.getSensors().items()]
-        sources = [create_source(port, 1, 16, 0x01) for port in existSensorsPorts]
+        sources, self.sensor_ports, self.sensor_classes = self.device.get_sensor_sources()
         self.device.start_acquisition(self.sampling_rate, sources)
         self.device.loop()
 
@@ -194,13 +202,13 @@ def main():
                 time.sleep(0.5)  # 短い間隔で再確認
         
         # Create text inputs for channel names
-        channel_names = []
-        num_columns = worker.device.data.shape[1] - 1  # Get the number of data columns
+        channel_names = worker.sensor_classes
+        num_columns = len(worker.sensor_ports)
         cols = st.columns(num_columns)  # Create columns for each channel
 
         for i in range(num_columns):
             with cols[i]:  # Use the corresponding column for each channel
-                channel_name = st.text_input(f"Channel {i+1} Name", value=f"Channel {i+1}", key=f"channel_name_{i}")  # Default name
+                channel_name = st.text_input(f"Port {worker.sensor_ports[i]}", value=f"{worker.sensor_classes[i]}", key=f"channel_name_{i}")  # Default name
                 channel_names.append(channel_name)
 
         # Dynamically create placeholders for graph drawing
