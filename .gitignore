@@ -10,3 +10,8 @@ data/
 
 # From another repository
 PLUX-API-Python3/
+
+# Related to desktop app
+dist/
+build/
+*.spec

@@ -42,6 +42,7 @@ This application is a Python application that retrieves data in real-time from t
     ```
 ## TODO
 - [x] Add a function to automatically detect type of sensors
+- [ ] Build as a desktop application (using [Streamlit Desktop App](https://github.com/ohtaman/streamlit-desktop-app))
 - [ ] Confirm compatibility with platforms other than macOS (M chip)
 - [ ] Refactor app.py
 - [ ] Introduce Ruff, mypy, and pytest (also add pre-commit)

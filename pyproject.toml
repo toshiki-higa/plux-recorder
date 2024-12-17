@@ -8,6 +8,7 @@ dependencies = [
     "streamlit>=1.39.0",
     "altair>=5.4.1",
     "pandas>=2.2.3",
+    "streamlit-desktop-app>=0.3.4",
 ]
 
 [tool.uv]

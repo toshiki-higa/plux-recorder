@@ -12,6 +12,7 @@ import altair as alt
 # Custom Library -------------------------
 import sys
 sys.path.append(str(Path(__file__).resolve().parent.parent / "PLUX-API-Python3/M1_312")) # Adjust as necessary
+sys.path.append(str(Path(__file__).resolve().parent / "PLUX-API-Python3/M1_312")) # Adjust as necessary for Desktop App
 import plux # type: ignore
 from const import MAC_ADDRESS, SAMPLING_RATE, INTERVAL, DURATION_KEEP_DATA, SENSOR_TYPES
 from logger import logger
@@ -46,13 +47,13 @@ class SignalsDevice(plux.SignalsDev):
         # Define the root directory of the repository
         repo_root = Path(__file__).resolve().parent.parent  # Adjust as necessary to reach the root
         # Define the data directory path
-        data_dir = repo_root / "data"
+        self.data_dir = repo_root / "data"
         # Create the data directory if it does not exist
-        if not data_dir.exists():
-            data_dir.mkdir(parents=True, exist_ok=True)
-            logger("Data directory created at: {}", data_dir, level='INFO')
+        if not self.data_dir.exists():
+            self.data_dir.mkdir(parents=True, exist_ok=True)
+            logger("Data directory created at: {}", self.data_dir, level='INFO')
         else:
-            logger("Data directory already exists at: {}", data_dir, level='INFO')
+            logger("Data directory already exists at: {}", self.data_dir, level='INFO')
     
     def onRawFrame(self, nSeq: int, data: tuple):
         """Callback responsible for receiving the data samples collected by the sensors.
@@ -83,7 +84,7 @@ class SignalsDevice(plux.SignalsDev):
             self.data = self.data.iloc[-(self.sampling_rate * DURATION_KEEP_DATA):]  # Remove oldest data
         # Write Data to CSV file every second
         if nSeq % self.sampling_rate == 0:
-            self.data.iloc[-self.sampling_rate:].to_csv(f"data/{self.filename}.csv", mode='a', header=False, index=False)  # Write the latest self.sampling_rate rows to CSV
+            self.data.iloc[-self.sampling_rate:].to_csv(f"{self.data_dir}/{self.filename}.csv", mode='a', header=False, index=False)  # Write the latest self.sampling_rate rows to CSV
         return self.stop_communication_loop.is_set()
 
     def start_acquisition(self, sampling_rate: int, sources: list):
