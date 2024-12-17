@@ -11,8 +11,8 @@ import altair as alt
 
 # Custom Library -------------------------
 import sys
-sys.path.append("PLUX-API-Python3/M1_312") # Adjust as necessary
-import plux
+sys.path.append(str(Path(__file__).resolve().parent.parent / "PLUX-API-Python3/M1_312")) # Adjust as necessary
+import plux # type: ignore
 from const import MAC_ADDRESS, SAMPLING_RATE, INTERVAL, DURATION_KEEP_DATA, SENSOR_TYPES
 from logger import logger
 
