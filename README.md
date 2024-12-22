@@ -41,11 +41,17 @@ This application is a Python application that retrieves data in real-time from t
     uv run streamlit run src/app.py --server.headless=true 
     ```
 ## TODO
-- [x] Add a function to automatically detect type of sensors
+### Add Functions
+- [x] Detect type of sensors automatically
+- [ ] Measurement with Multiple Wireless Hubs
+
+### Test and Document
 - [ ] Confirm compatibility with platforms other than macOS (M chip)
+- [ ] Make document using MKDocs
+
+### Improve Code Quality
 - [ ] Refactor app.py
 - [ ] Introduce Ruff, mypy, and pytest (also add pre-commit)
-- [ ] Make document using MKDocs
 
 ## License
 This repository is licensed under the MIT License.
